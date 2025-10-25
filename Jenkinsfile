@@ -1,6 +1,5 @@
 pipeline {
     agent any
-     #hey
     environment {
         // Charge le token GitHub stocké dans Jenkins
         GITHUB_TOKEN = credentials('Github-token')
