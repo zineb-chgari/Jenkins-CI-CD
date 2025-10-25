@@ -5,7 +5,9 @@ pipeline {
         // Charge le token GitHub stocké dans Jenkins
         GITHUB_TOKEN = credentials('Github-token')
     }
-
+    triggers {
+        cron('H/5 * * * *') // H/5 → toutes les 5 minutes, H répartit les builds pour ne pas tout lancer exactement en même temps
+    }
     stages {
 
         stage('Checkout') {
