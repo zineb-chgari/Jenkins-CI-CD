@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+     #hey
     environment {
         // Charge le token GitHub stocké dans Jenkins
         GITHUB_TOKEN = credentials('Github-token')
@@ -8,6 +8,11 @@ pipeline {
     triggers {
         cron('H/5 * * * *') // H/5 → toutes les 5 minutes, H répartit les builds pour ne pas tout lancer exactement en même temps
     }
+    triggers {
+    // Cron actuel : H/5 * * * * → toutes les 5 minutes
+    // Pour test, utiliser H/1 * * * * → toutes les 1 minute
+    cron('H/1 * * * *')
+}
     stages {
 
         stage('Checkout') {
