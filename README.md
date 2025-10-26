@@ -11,8 +11,3 @@ Ce projet est une application web qui permet de gérer des tâches quotidiennes 
 - [Contribuer](#contribuer)
 - [Licence](#licence)
 
-## Installation
-
-1. Clonez le dépôt :  
-```bash
-git clone https://github.com/votre-utilisateur/nom-du-projet.git
