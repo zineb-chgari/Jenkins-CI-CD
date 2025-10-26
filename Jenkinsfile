@@ -6,9 +6,6 @@ pipeline {
         GITHUB_TOKEN = credentials('Github-token')
     }
 
-    triggers {
-        cron('H/5 * * * *') // build toutes les 5 minutes
-    }
 
     stages {
 
