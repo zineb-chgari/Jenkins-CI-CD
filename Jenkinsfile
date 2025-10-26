@@ -1,16 +1,15 @@
 pipeline {
     agent any
+
     environment {
         // Charge le token GitHub stocké dans Jenkins
         GITHUB_TOKEN = credentials('Github-token')
     }
 
     stages {
-
         stage('Checkout') {
             steps {
                 echo '📥 Cloning the repository...'
-                // Cloner le dépôt GitHub avec le credential Jenkins
                 git branch: 'main', 
                     url: 'https://github.com/zineb-chgari/Jenkins-CI-CD', 
                     credentialsId: 'Github-token'
@@ -20,7 +19,6 @@ pipeline {
         stage('Setup Python Virtual Environment') {
             steps {
                 echo '⚙️ Setting up Python virtual environment...'
-                // Commandes Windows (bat) — activation et installation
                 bat """
                     python -m venv venv
                     call venv\\Scripts\\activate
@@ -32,13 +30,25 @@ pipeline {
         }
 
         stage('Run Tests') {
-            steps {
-                echo '🧪 Running tests with pytest...'
-                // Important : réactiver le venv dans chaque bloc bat
-                bat """
-                    call venv\\Scripts\\activate
-                    pytest --maxfail=1 --disable-warnings -q
-                """
+            parallel {
+                stage('Test App 1') {
+                    steps {
+                        echo '🧪 Running test_app.py...'
+                        bat """
+                            call venv\\Scripts\\activate
+                            pytest test_app.py --maxfail=1 --disable-warnings -q
+                        """
+                    }
+                }
+                stage('Test App 2') {
+                    steps {
+                        echo '🧪 Running test_app_2.py...'
+                        bat """
+                            call venv\\Scripts\\activate
+                            pytest test_app_2.py --maxfail=1 --disable-warnings -q
+                        """
+                    }
+                }
             }
         }
     }
