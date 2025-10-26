@@ -6,7 +6,12 @@ pipeline {
         GITHUB_TOKEN = credentials('Github-token')
     }
 
+    triggers {
+        cron('H/5 * * * *') // build toutes les 5 minutes
+    }
+
     stages {
+
         stage('Checkout') {
             steps {
                 echo '📥 Cloning the repository...'
@@ -30,6 +35,11 @@ pipeline {
         }
 
         stage('Run Tests') {
+            when {
+                not {
+                    changeset "**/README.md"
+                }
+            }
             parallel {
                 stage('Test App 1') {
                     steps {
