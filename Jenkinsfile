@@ -5,6 +5,10 @@ pipeline {
         // Charge le token GitHub stocké dans Jenkins
         GITHUB_TOKEN = credentials('Github-token')
     }
+    triggers { 
+        // Déclenche le pipeline toutes les 5 minutes
+        cron('H/5 * * * *')
+    }
      triggers {
         // Déclenche le pipeline à chaque push sur le repo
         // Ceci fonctionne avec le webhook GitHub configuré dans Jenkins
