@@ -2,14 +2,12 @@ pipeline {
     agent any
 
     environment {
-        // Charge le token GitHub stocké dans Jenkins
         GITHUB_TOKEN = credentials('Github-token')
     }
+
     triggers { 
-        // Déclenche le pipeline toutes les 5 minutes
         cron('H/5 * * * *')
     }
-
 
     stages {
 
@@ -65,11 +63,34 @@ pipeline {
     }
 
     post {
+
         success {
             echo '✅ Pipeline completed successfully!'
+            emailext(
+                subject: "✔️ SUCCESS : ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                    <h2 style='color:green;'>Pipeline Success</h2>
+                    <p><b>Job :</b> ${env.JOB_NAME}</p>
+                    <p><b>Build :</b> #${env.BUILD_NUMBER}</p>
+                    <p><b>Logs :</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                """,
+                to: "zinebchgari2004@gmail.com"
+            )
         }
+
         failure {
             echo '❌ Pipeline failed!'
+            emailext(
+                subject: "❌ FAILURE : ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                    <h2 style='color:red;'>Pipeline Failed</h2>
+                    <p><b>Job :</b> ${env.JOB_NAME}</p>
+                    <p><b>Build :</b> #${env.BUILD_NUMBER}</p>
+                    <p><b>Logs :</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                """,
+                to: "zinebchgari2004@gmail.com"
+            )
         }
+
     }
 }
