@@ -53,10 +53,10 @@ pipeline {
                 }
                 stage('Test App 2') {
                     steps {
-                        echo '🧪 Running test_app_2.py...'
+                        echo '🧪 Running test_app2.py...'
                         bat """
                             call venv\\Scripts\\activate
-                            pytest test_app_2.py --maxfail=1 --disable-warnings -q
+                            pytest test_app2.py --maxfail=1 --disable-warnings -q
                         """
                     }
                 }
