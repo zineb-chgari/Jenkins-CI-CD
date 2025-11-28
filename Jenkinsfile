@@ -5,8 +5,8 @@ pipeline {
         GITHUB_TOKEN = credentials('Github-token')
     }
 
-    triggers { 
-        cron('H/5 * * * *')
+    triggers {
+    githubPush()
     }
 
     stages {
