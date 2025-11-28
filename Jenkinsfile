@@ -4,11 +4,9 @@ pipeline {
     environment {
         GITHUB_TOKEN = credentials('Github-token')
     }
-
     triggers {
     githubPush()
     }
-
     stages {
 
         stage('Checkout') {
